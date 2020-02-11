@@ -21,12 +21,7 @@ public class TransactionCallback implements TransactionFinishedCallback {
     @Override
     public void onTransactionFinished(TransactionResult transactionResult) {
         // temporary fix for gopay pending status
-        if (transactionResult.isTransactionCanceled() || (transactionResult.getResponse().getPaymentType().equals("gopay") && transactionResult.getStatus().equals("pending"))) {
-            this.callback.invoke("cancelled");
-        } else {
-            this.callback.invoke(transactionResult.getStatus());
-        }
-
+        this.callback.invoke(transactionResult);
         if (transactionResult != null && transactionResult.getStatus() != null)
             Log.d("result", transactionResult.getStatus());
     }
